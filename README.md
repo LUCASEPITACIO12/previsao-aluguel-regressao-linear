@@ -33,16 +33,25 @@ Quem procura um apartamento para alugar normalmente sabe o tamanho do imóvel, o
 
 ## Resultados
 
-| Modelo | R² treino | R² teste |
-|---|---|---|
-| Regressão linear simples (Metragem) | 0,414 | 0,435 |
-| Regressão linear múltipla (6 variáveis) | 0,519 | 0,508 |
+| Modelo | R² treino | R² teste | MAE teste | RMSE teste |
+|---|---|---|---|---|
+| Regressão linear simples (Metragem) | 0,414 | 0,435 | R$ 812 | R$ 1.145 |
+| Regressão linear múltipla (6 variáveis) | 0,519 | 0,508 | R$ 752 | R$ 1.069 |
+| Regressão linear múltipla sem N_Suites (modelo final) | 0,518 | 0,506 | R$ 752 | R$ 1.070 |
 
 - Equação do modelo simples: **Valor_Aluguel = 26,41 × Metragem + 359,39**. Cada m² a mais soma cerca de R$ 26 ao aluguel.
-- A regressão múltipla teve o melhor desempenho, e nenhum dos dois modelos mostra overfitting, porque o R² de treino e o de teste ficaram próximos.
-- Cerca de metade da variação do aluguel continua sem explicação. A principal informação que falta na base é a localização do imóvel, e incluí-la seria o próximo passo para melhorar o modelo.
+- A regressão múltipla teve o melhor desempenho, e nenhum dos modelos mostra overfitting, porque o R² de treino e o de teste ficaram próximos.
+- O modelo final erra em média cerca de R$ 750 por imóvel (MAE). Isso basta como referência de preço, mas ainda é um erro grande perto do aluguel médio de cerca de R$ 2.370.
 
 ![Reta de regressão: metragem x valor do aluguel](reta_regressao.png)
+
+## Melhorias aplicadas
+
+- **Erro em reais:** além do R², os modelos são avaliados com MAE, MSE e RMSE, que mostram o tamanho do erro na mesma unidade do aluguel.
+- **Análise dos resíduos:** a média dos resíduos é praticamente zero, mas eles formam um funil (o erro cresce nos imóveis mais caros) e têm uma cauda à direita, com imóveis bem mais caros do que o modelo prevê.
+- **Multicolinearidade:** banheiros e suítes têm correlação de 0,92 e VIF acima de 6. Sem `N_Suites`, todos os VIFs ficam abaixo de 4 e o desempenho praticamente não muda, por isso esse virou o modelo final.
+- **Padronização:** com as variáveis padronizadas, os coeficientes podem ser comparados. A metragem é a variável mais importante, seguida do número de quartos (efeito negativo para o mesmo tamanho) e do condomínio.
+- **Localização:** a base não tem bairro nem região. Com essa informação, o próximo passo seria codificá-la com One-Hot Encoding, já que a localização costuma ser o fator que mais pesa no preço.
 
 ## Como executar
 
