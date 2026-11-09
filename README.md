@@ -42,7 +42,7 @@ Quem procura um apartamento para alugar normalmente sabe o tamanho do imóvel, o
 - A regressão múltipla teve o melhor desempenho, e nenhum dos dois modelos mostra overfitting, porque o R² de treino e o de teste ficaram próximos.
 - Cerca de metade da variação do aluguel continua sem explicação. A principal informação que falta na base é a localização do imóvel, e incluí-la seria o próximo passo para melhorar o modelo.
 
-![Reta de regressão: metragem x valor do aluguel](imagens/reta_regressao.png)
+![Reta de regressão: metragem x valor do aluguel](reta_regressao.png)
 
 ## Como executar
 
